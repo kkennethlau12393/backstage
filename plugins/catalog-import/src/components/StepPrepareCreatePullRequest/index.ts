@@ -15,10 +15,7 @@
  */
 
 export { AutocompleteTextField } from './AutocompleteTextField';
-export type {
-  AutocompleteTextFieldOption,
-  AutocompleteTextFieldProps,
-} from './AutocompleteTextField';
+export type { AutocompleteTextFieldProps } from './AutocompleteTextField';
 export { PreparePullRequestForm } from './PreparePullRequestForm';
 export type { PreparePullRequestFormProps } from './PreparePullRequestForm';
 export { PreviewCatalogInfoComponent } from './PreviewCatalogInfoComponent';

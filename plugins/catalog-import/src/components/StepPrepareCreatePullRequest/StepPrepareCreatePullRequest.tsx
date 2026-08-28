@@ -21,7 +21,6 @@ import { useTranslationRef } from '@backstage/frontend-plugin-api';
 import {
   catalogApiRef,
   entityPresentationApiRef,
-  humanizeEntityRef,
 } from '@backstage/plugin-catalog-react';
 import Box from '@material-ui/core/Box';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -42,7 +41,6 @@ import { PrepareResult } from '../useImportState';
 import { PreparePullRequestForm } from './PreparePullRequestForm';
 import { PreviewCatalogInfoComponent } from './PreviewCatalogInfoComponent';
 import { PreviewPullRequestComponent } from './PreviewPullRequestComponent';
-import { AutocompleteTextFieldOption } from './AutocompleteTextField';
 
 const useStyles = makeStyles(theme => ({
   previewCard: {
@@ -96,7 +94,7 @@ export interface StepPrepareCreatePullRequestProps {
       'register' | 'setValue' | 'formState'
     > & {
       values: UnpackNestedValue<FormData>;
-      groups: AutocompleteTextFieldOption[];
+      groups: string[];
       groupsLoading: boolean;
     },
   ) => ReactNode;
@@ -164,21 +162,13 @@ export const StepPrepareCreatePullRequest = (
       filter: { kind: 'group' },
     });
 
-    const options = await Promise.all(
-      groupEntities.items.map(async entity => ({
-        label: (
-          await entityPresentationApi.forEntity(entity, {
-            defaultKind: 'group',
-          }).promise
-        ).primaryTitle,
-        // The selected value is written verbatim to `spec.owner` of the
-        // generated entity, so it has to be an entity reference rather than a
-        // display name.
-        id: humanizeEntityRef(entity, { defaultKind: 'group' }),
-      })),
+    const presentations = await Promise.all(
+      groupEntities.items.map(
+        e =>
+          entityPresentationApi.forEntity(e, { defaultKind: 'group' }).promise,
+      ),
     );
-
-    return options.sort((a, b) => a.label.localeCompare(b.label));
+    return presentations.map(p => p.primaryTitle).sort();
   });
 
   const handleResult = useCallback(

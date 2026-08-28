@@ -269,27 +269,6 @@ spec:
               name: 'my-group',
             },
           },
-          {
-            apiVersion: '1',
-            kind: 'Group',
-            metadata: {
-              name: 'my-team',
-              title: 'My Team',
-            },
-            spec: {
-              profile: {
-                displayName: 'My Displayed Team',
-              },
-            },
-          },
-          {
-            apiVersion: '1',
-            kind: 'Group',
-            metadata: {
-              name: 'other-group',
-              namespace: 'other-namespace',
-            },
-          },
         ],
       }),
     );
@@ -310,14 +289,7 @@ spec:
 
     expect(renderFormFieldsFn).toHaveBeenCalled();
     expect(renderFormFieldsFn.mock.calls[0][0]).toMatchObject({
-      groups: [
-        { label: 'My Displayed Team', id: 'my-team' },
-        { label: 'my-group', id: 'my-group' },
-        {
-          label: 'other-namespace/other-group',
-          id: 'other-namespace/other-group',
-        },
-      ],
+      groups: ['my-group'],
       groupsLoading: false,
     });
   });
