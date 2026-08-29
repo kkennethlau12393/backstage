@@ -53,14 +53,6 @@ export const AutocompleteTextField: <TFieldValue extends string>(
 ) => JSX_2.Element;
 
 // @public
-export type AutocompleteTextFieldOption =
-  | string
-  | {
-      label: string;
-      id: string;
-    };
-
-// @public
 export interface AutocompleteTextFieldProps<TFieldValue extends string> {
   // (undocumented)
   errorHelperText?: string;
@@ -75,7 +67,7 @@ export interface AutocompleteTextFieldProps<TFieldValue extends string> {
   // (undocumented)
   name: TFieldValue;
   // (undocumented)
-  options: AutocompleteTextFieldOption[];
+  options: string[];
   // (undocumented)
   required?: boolean;
   // (undocumented)
@@ -441,7 +433,7 @@ export interface StepPrepareCreatePullRequestProps {
       'register' | 'setValue' | 'formState'
     > & {
       values: UnpackNestedValue<FormData_2>;
-      groups: AutocompleteTextFieldOption[];
+      groups: string[];
       groupsLoading: boolean;
     },
   ) => ReactNode;
